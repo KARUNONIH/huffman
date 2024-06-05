@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body class="font-poppins">
+    <header class="sticky top-0 z-50 shadow">
+      <nav class="border-gray-200 bg-white">
+        <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
+          <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" class="h-8" alt="Flowbite Logo" />
+            <span class="self-center whitespace-nowrap text-2xl font-semibold">IPB University</span>
+          </a>
+          <button  type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden" id="btn-navbar">
+            <span class="sr-only">Open main menu</span>
+            <i class="fa-solid fa-bars text-xl " id="icon-navbar"></i>
+          </button>
+          <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul id="nav-menu" class="mt-4 flex flex-col gap-2 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 rtl:space-x-reverse">
+              <!-- List navbar pages -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto w-4/5">
+      <div class="page mt-12 flex w-full justify-center" id="text">
+        <div class="relative max-h-full w-[380px] md:w-[600px]">
+          <form action="/encode" method="post" id="form-text">
+            <div class="relative rounded-xl bg-white p-4 shadow shadow-gray-300 md:p-5">
+              <!-- Modal header -->
+              <div class="flex items-center justify-between rounded-t border-b pb-3">
+                <section class="flex items-center">
+                  <h3 class="text-base font-semibold capitalize text-gray-900">Text Encode</h3>
+                </section>
+                <!-- <button type="button" class="text-sm underline" data-modal-target="static-modal" data-modal-toggle="static-modal">History</button> -->
+              </div>
+              <!-- Modal body -->
+              <div class="space-y-4 py-4 md:py-5">
+                <div>
+                  <label for="text" class="mb-2 block text-sm font-medium capitalize text-gray-900">text input</label>
+                  <input type="text" id="text-input" name="text" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="write something" required autofocus />
+                </div>
+                <div>
+                  <label for="encoded_text" class="block text-sm font-medium capitalize text-gray-900">Encoded Text Output</label>
+                  <textarea id="encoded_text" rows="4" class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" placeholder="Text that has been encoded will appear here." readonly></textarea>
+                </div>
+              </div>
+              <!-- Modal footer -->
+              <div class="flex flex-row-reverse items-center justify-between rounded-b border-t border-gray-200 pt-2 md:pt-3 dark:border-gray-600">
+                <button type="submit" class="rounded-lg bg-green-600 px-4 py-2 text-center text-sm font-medium capitalize text-white focus:outline-none md:hover:bg-green-800">process</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="page mt-12 flex w-full justify-center" id="image">
+        <div class="relative max-h-full w-[380px] md:w-[600px] mb-10 md:mb-0">
+          <form action="/compress_image" method="post" enctype="multipart/form-data" id="form-image">
+            <div class="relative rounded-xl bg-white p-4 shadow shadow-gray-300 md:p-5">
+              <!-- Modal header -->
+              <div class="flex items-center justify-between rounded-t border-b pb-3">
+                <section class="flex items-center">
+                  <h3 class="text-base font-semibold capitalize text-gray-900">Image Compress</h3>
+                </section>
+              </div>
+              <!-- Modal body -->
+              <div class="space-y-4 py-4 md:py-5">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  <div class="flex flex-col justify-between">
+                    <label for="inputImage" class="mb-2 block text-sm font-medium capitalize text-gray-900">image input</label>
+                    <input name="image" class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none" id="inputImage" type="file" accept="image/*" required/>
+                    <div class="">
+                    <img id="imagePreview" src="https://placehold.co/1600x900.png" alt="Image Preview" class="mb-2 mt-2 aspect-video w-full rounded border-2 border-gray-100" />
+                    <p id="fileSize" class="text-center text-sm">0 mb</p>
+                  </div>
+                  </div>  
+                  <div class="flex flex-col justify-between">
+                    <p class="block text-sm font-medium capitalize text-gray-900">image Compressed</p>
+                    <div class="">
+                    <img id="placeholder-image-source" src="https://placehold.co/1600x900.png" alt="Image Preview" class="mb-2 mt-2 aspect-video w-full rounded border-2 border-gray-100" />
+                    <p id="placeholder-image-size" class="text-center text-sm">0 mb</p>
+                    {% if compressed_image %}
+                      <img id="image-source" src="data:image/jpeg;base64,{{ compressed_image }}" alt="Compressed Image" class="mb-2 mt-2 aspect-video w-full rounded border-2 border-gray-100"/>
+                      <p id="image-size" class="text-center text-sm">{{ file_size }} mb</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal footer -->
+              <div class="flex flex-row-reverse items-center justify-between rounded-b border-t border-gray-200 pt-2 md:pt-3 dark:border-gray-600">
+                <button type="submit" class="rounded-lg bg-green-600 px-4 py-2 text-center text-sm font-medium capitalize text-white focus:outline-none md:hover:bg-green-800">process</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- <h2 class="mb-4 text-xl font-bold">Image Compression</h2>
+        <form action="/compress_image" method="post" enctype="multipart/form-data" class="compress mb-4">
+          <label for="image" class="mb-2 block">UPLOAD GAMBAR</label>
+          <input type="file" name="image" id="inputImage" accept="image/*" onchange="previewImage(event)" class="mb-4 block" />
+          <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 200px; max-height: 200px" class="mb-4" />
+          <p id="fileSize" class="mb-4"></p>
+          <input type="submit" value="Compress Image" class="rounded bg-blue-500 px-4 py-2 text-white" />
+        </form>
+        {% if compressed_image %}
+        <div class="result_image mb-4">
+          <h3 class="font-bold">Compressed:</h3>
+          <img src="data:image/jpeg;base64,{{ compressed_image }}" alt="Compressed Image" class="mb-4" />
+          <br />
+          <a href="{{ url_for('download_file', filename=image_name) }}"><button class="rounded bg-blue-500 px-4 py-2 text-white">Download Image</button></a>
+        </div>
+        {% endif %} -->
+      </div>
+
+      <div class="page" id="about">halaman about</div>
+    </main>
+
+    {% if encoded_text %}
+    <script>
+      let encodedText = {{ encoded_text|tojson|safe }};
+      let codebook = {{ codebook|tojson|safe }};
+    </script>
+    {% else %}
+    <script>
+      let encodedText = "";
+      let codebook = {};
+    </script>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/flowbite.min.js') }}"></script>
+  </body>
+</html>
